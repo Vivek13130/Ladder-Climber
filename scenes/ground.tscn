@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://blf33r43q8td0"]
+
+[ext_resource type="Texture2D" uid="uid://0iugbxly381u" path="res://assets/ground.png" id="1_hgas3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i6qwd"]
+size = Vector2(1605, 160)
+
+[node name="Ground" type="StaticBody2D"]
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(602.5, 0)
+shape = SubResource("RectangleShape2D_i6qwd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_hgas3")
+region_enabled = true
+region_rect = Rect2(0, 6, 402, 165)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(402, 0)
+texture = ExtResource("1_hgas3")
+region_enabled = true
+region_rect = Rect2(0, 6, 402, 165)
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(804, 0)
+texture = ExtResource("1_hgas3")
+region_enabled = true
+region_rect = Rect2(0, 6, 402, 165)
+
+[node name="Sprite2D4" type="Sprite2D" parent="."]
+position = Vector2(1206, 0)
+texture = ExtResource("1_hgas3")
+region_enabled = true
+region_rect = Rect2(0, 6, 402, 165)
