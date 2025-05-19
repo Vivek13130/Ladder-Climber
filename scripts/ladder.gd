@@ -7,6 +7,10 @@ var step_height := 25
 var ladder_step_size : int = 1
 var ladder_steps : Array = []  # To store all the ladder steps
 
+var ladder_is_growing : bool = false
+var ladder_is_falling : bool = false
+
+var platform_width = 300
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -15,20 +19,20 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if(Input.is_action_just_pressed("space") and not Manager.ladder_is_falling):
-		Manager.ladder_is_growing = true 
-		grow_timer = 0.0
+	if(ladder_is_falling):
+		return
 	
-	if(Input.is_action_just_released("space") and Manager.ladder_is_growing):
-		Manager.ladder_is_growing = false   
-		Manager.ladder_is_falling = true
-		drop_ladder("left")
-	
-	if Manager.ladder_is_growing:
+	if ladder_is_growing:
 		grow_timer += delta
 		if(grow_timer >= spawn_rate):
 			spawn_step()
 			grow_timer = 0.0
+
+
+func start_growing():
+	if(not ladder_is_falling):
+		ladder_is_growing = true 
+		grow_timer = 0.0
 
 
 # Function to spawn a new ladder step
@@ -36,21 +40,26 @@ func spawn_step():
 	var step : Sprite2D = ladder_step_scene.instantiate()
 	var y_offset = -step_height * ladder_step_size
 	step.position = Vector2(0, y_offset)
-	print("step spawned at : " , step.position)
 
 	# Add the step to the list and scene
 	add_child(step)
+	$step_add.play()
 	ladder_steps.append(step)  # Add to the array
 	ladder_step_size += 1
 
 
 # Function to drop the ladder and combine steps into one rigid body
 func drop_ladder(direction: String):
-	var full_ladder = RigidBody2D.new()
-	print("full ladder spawned at : " , full_ladder.position)
+	ladder_is_growing = false 
+	ladder_is_falling = true
+	
+	var full_ladder : RigidBody2D = RigidBody2D.new()
+	full_ladder.add_to_group("ladder")
+	full_ladder.mass = 0.1
 	add_child(full_ladder)
 	full_ladder.global_position = ladder_steps[0].global_position  # Position the full ladder at the base of the first step
-
+	
+	Manager.rigid_ladders.append(full_ladder)
 	# Create a collision shape to represent the full ladder
 	var col = CollisionShape2D.new()
 	var shape := CapsuleShape2D.new()
@@ -82,15 +91,34 @@ func drop_ladder(direction: String):
 	var dir = -1 if (direction == "left") else 1
 	full_ladder.rotation = deg_to_rad(dir * 5)
 	
-	# Wait 2 seconds
-	await get_tree().create_timer(1.0).timeout
+	check_ladder_validity(full_ladder)
 
-	# Break into pieces
-	break_ladder()
+
+func check_ladder_validity(full_ladder : RigidBody2D):
+	var curr_index = Manager.current_platform_index
+	var curr_platform = Manager.platforms[curr_index]
+	var next_platform = Manager.platforms[curr_index + 1]
 	
+	var player_position = Manager.player_position
+	
+	var dist1 = player_position.distance_to(next_platform.global_position )
+	var dist = player_position.distance_to(next_platform.global_position )
+	var required_steps = int(round(min(dist, dist1) / step_height))
+	
+	#print("required steps : ", required_steps, "  steps found : ", ladder_step_size)
+	
+	if ladder_step_size - required_steps > 10:
+		await get_tree().create_timer(3.0).timeout
+		break_ladder(full_ladder)
 
-func break_ladder():
-	var full_ladder = get_child(0)
+	elif ladder_step_size - required_steps  < -5:
+		await get_tree().create_timer(3.0).timeout
+		break_ladder(full_ladder)
+
+
+
+func break_ladder(body):
+	var full_ladder = body
 	if not full_ladder or not full_ladder is RigidBody2D:
 		return
 	
@@ -98,6 +126,7 @@ func break_ladder():
 		if child is Sprite2D:
 			# Create new step as RigidBody2D
 			var step = RigidBody2D.new()
+			
 			step.position = child.global_position
 			step.rotation = child.global_rotation
 			step.gravity_scale = 1.0
@@ -117,8 +146,13 @@ func break_ladder():
 			shape.shape = rect
 			step.add_child(shape)
 			
-			# Add to scene
-			get_parent().add_child(step)
+			var ladder_holder = get_tree().get_root().get_node("Main/ladder_residue")
+			if ladder_holder:
+				ladder_holder.add_child(step)
+				step.collision_layer = 10 # no more collision with ladder or platforms 
+				step.collision_mask = 1 # only collide with platforms 
+			else:
+				print("Ladder residue holder not found!")
 			
 			# Add random impulse for effect
 			var rand_x = randf_range(-500, 500)

@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://dv78pofw8dx7p"]
+[gd_scene load_steps=3 format=3 uid="uid://dv78pofw8dx7p"]
 
 [ext_resource type="Script" path="res://scripts/ladder.gd" id="1_f3wja"]
+[ext_resource type="AudioStream" uid="uid://bij3il16cyi4o" path="res://assets/pickupCoin.wav" id="2_ig5gr"]
 
 [node name="ladder" type="Node2D"]
 script = ExtResource("1_f3wja")
+
+[node name="step_add" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_ig5gr")
+volume_db = -10.0

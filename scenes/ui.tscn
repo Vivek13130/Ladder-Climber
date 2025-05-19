@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cwfoxj31lsdq"]
+[gd_scene load_steps=3 format=3 uid="uid://cwfoxj31lsdq"]
 
 [ext_resource type="Script" path="res://scripts/ui.gd" id="1_kc06f"]
+[ext_resource type="StyleBox" uid="uid://bp42hj3ic64w8" path="res://assets/ui_box.tres" id="2_jealt"]
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -10,3 +11,48 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_kc06f")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.5
+offset_top = -29.0
+offset_right = 20.5
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="Button" type="Button" parent="Panel/VBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 60
+theme_override_styles/hover = ExtResource("2_jealt")
+theme_override_styles/normal = ExtResource("2_jealt")
+text = "Play"
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = ExtResource("2_jealt")
+text = "High Score : 0m"
+
+[connection signal="pressed" from="Panel/VBoxContainer/Button" to="." method="_on_button_pressed"]

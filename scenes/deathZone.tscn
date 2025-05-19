@@ -1,0 +1,111 @@
+[gd_scene load_steps=5 format=3 uid="uid://blf33r43q8td0"]
+
+[ext_resource type="Script" path="res://scripts/deathZone.gd" id="1_62ihr"]
+[ext_resource type="Texture2D" uid="uid://0iugbxly381u" path="res://assets/ground.png" id="1_hgas3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i6qwd"]
+size = Vector2(4825, 160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nrowh"]
+size = Vector2(4811, 74)
+
+[node name="deathZone" type="StaticBody2D"]
+collision_layer = 7
+collision_mask = 7
+script = ExtResource("1_62ihr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(602.5, 0)
+shape = SubResource("RectangleShape2D_i6qwd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+texture = ExtResource("1_hgas3")
+region_enabled = true
+region_rect = Rect2(0, 6, 402, 165)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(402, 0)
+texture = ExtResource("1_hgas3")
+region_enabled = true
+region_rect = Rect2(0, 6, 402, 165)
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(804, 0)
+texture = ExtResource("1_hgas3")
+region_enabled = true
+region_rect = Rect2(0, 6, 402, 165)
+
+[node name="Sprite2D4" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(1206, 0)
+texture = ExtResource("1_hgas3")
+region_enabled = true
+region_rect = Rect2(0, 6, 402, 165)
+
+[node name="Sprite2D5" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(1608, 0.5)
+texture = ExtResource("1_hgas3")
+region_enabled = true
+region_rect = Rect2(0, 6, 402, 165)
+
+[node name="Sprite2D6" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(2010, 0.5)
+texture = ExtResource("1_hgas3")
+region_enabled = true
+region_rect = Rect2(0, 6, 402, 165)
+
+[node name="Sprite2D7" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(2412, 0.5)
+texture = ExtResource("1_hgas3")
+region_enabled = true
+region_rect = Rect2(0, 6, 402, 165)
+
+[node name="Sprite2D8" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(2814, 0.5)
+texture = ExtResource("1_hgas3")
+region_enabled = true
+region_rect = Rect2(0, 6, 402, 165)
+
+[node name="Sprite2D9" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(-1600, 4.5)
+texture = ExtResource("1_hgas3")
+region_enabled = true
+region_rect = Rect2(0, 6, 402, 165)
+
+[node name="Sprite2D10" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(-1198, 4.5)
+texture = ExtResource("1_hgas3")
+region_enabled = true
+region_rect = Rect2(0, 6, 402, 165)
+
+[node name="Sprite2D11" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(-796, 4.5)
+texture = ExtResource("1_hgas3")
+region_enabled = true
+region_rect = Rect2(0, 6, 402, 165)
+
+[node name="Sprite2D12" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+position = Vector2(-394, 4.5)
+texture = ExtResource("1_hgas3")
+region_enabled = true
+region_rect = Rect2(0, 6, 402, 165)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(601.5, -112)
+shape = SubResource("RectangleShape2D_nrowh")
+debug_color = Color(0.91958, 6.23775e-05, 0.698002, 0.42)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

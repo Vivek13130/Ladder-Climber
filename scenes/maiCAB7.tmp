@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://dl0gbnnyuuusy"]
+
+[ext_resource type="PackedScene" uid="uid://blf33r43q8td0" path="res://scenes/deathZone.tscn" id="1_3oteg"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_87lmr"]
+[ext_resource type="PackedScene" uid="uid://bknvofivxt4oe" path="res://scenes/player.tscn" id="3_v7u1g"]
+[ext_resource type="PackedScene" uid="uid://b4oh8qlhbmvkn" path="res://scenes/platform.tscn" id="4_yi8lw"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_87lmr")
+
+[node name="deathZone" parent="." instance=ExtResource("1_3oteg")]
+position = Vector2(-16, 631)
+
+[node name="player" parent="." instance=ExtResource("3_v7u1g")]
+position = Vector2(248, 219)
+
+[node name="Leftover_Ladders" type="Node2D" parent="."]
+
+[node name="Platform_manager" type="Node2D" parent="."]
+
+[node name="StartPlatform" parent="Platform_manager" instance=ExtResource("4_yi8lw")]
+position = Vector2(246, 345)

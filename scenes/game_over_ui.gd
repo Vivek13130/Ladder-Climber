@@ -2,10 +2,9 @@ extends Control
 
 
 # Called when the node enters the scene tree for the first time.
-@onready var label: Label = $Panel/VBoxContainer/Label
-
 func _ready() -> void:
-	label.text = "Highscore : " + str(Manager.high_score) + " m"
+	pass # Replace with function body.
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -13,4 +12,4 @@ func _process(delta: float) -> void:
 
 
 func _on_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/main.tscn")
+	get_tree().change_scene_to_file("res://scenes/ui.tscn")

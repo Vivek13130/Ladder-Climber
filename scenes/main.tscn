@@ -1,14 +1,32 @@
-[gd_scene load_steps=4 format=3 uid="uid://dl0gbnnyuuusy"]
+[gd_scene load_steps=7 format=3 uid="uid://dl0gbnnyuuusy"]
 
-[ext_resource type="PackedScene" uid="uid://blf33r43q8td0" path="res://scenes/ground.tscn" id="1_3oteg"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_87lmr"]
-[ext_resource type="PackedScene" uid="uid://dv78pofw8dx7p" path="res://scenes/ladder.tscn" id="3_bolmk"]
+[ext_resource type="PackedScene" uid="uid://bknvofivxt4oe" path="res://scenes/player.tscn" id="3_v7u1g"]
+[ext_resource type="PackedScene" uid="uid://b4oh8qlhbmvkn" path="res://scenes/platform.tscn" id="4_yi8lw"]
+[ext_resource type="PackedScene" uid="uid://d1mtu4rwjfyyw" path="res://scenes/in_game_ui.tscn" id="5_2cxml"]
+[ext_resource type="PackedScene" uid="uid://bxmguyvo1mhm7" path="res://scenes/platform_spawner.tscn" id="5_tf1iy"]
+[ext_resource type="PackedScene" uid="uid://blf33r43q8td0" path="res://scenes/deathZone.tscn" id="6_hvc7x"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_87lmr")
 
-[node name="Ground" parent="." instance=ExtResource("1_3oteg")]
-position = Vector2(-16, 631)
+[node name="player" parent="." instance=ExtResource("3_v7u1g")]
+position = Vector2(251, 145)
 
-[node name="ladder" parent="." instance=ExtResource("3_bolmk")]
-position = Vector2(554, 475)
+[node name="Leftover_Ladders" type="Node2D" parent="."]
+
+[node name="Platform_manager" type="Node2D" parent="."]
+
+[node name="StartPlatform" parent="Platform_manager" instance=ExtResource("4_yi8lw")]
+position = Vector2(183, 410)
+
+[node name="platform_spawner" parent="." instance=ExtResource("5_tf1iy")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="in-game-ui" parent="CanvasLayer" instance=ExtResource("5_2cxml")]
+
+[node name="ladder_residue" type="Node2D" parent="."]
+
+[node name="deathZone" parent="." instance=ExtResource("6_hvc7x")]
+position = Vector2(-246, 877)

@@ -1,12 +1,40 @@
-[gd_scene load_steps=3 format=3 uid="uid://bknvofivxt4oe"]
+[gd_scene load_steps=5 format=3 uid="uid://bknvofivxt4oe"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_4t7hy"]
+[ext_resource type="PackedScene" uid="uid://dv78pofw8dx7p" path="res://scenes/ladder.tscn" id="2_62msn"]
+[ext_resource type="Texture2D" uid="uid://c1d25ukdvcn57" path="res://assets/player (2).png" id="2_stmqn"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xxc3d"]
-height = 49.53
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tnbaf"]
+radius = 22.0
+height = 130.0
 
-[node name="player" type="CharacterBody2D"]
+[node name="player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_4t7hy")
+ladder_scene = ExtResource("2_62msn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_xxc3d")
+shape = SubResource("CapsuleShape2D_tnbaf")
+
+[node name="Graphics" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Graphics"]
+scale = Vector2(0.4117, 0.4117)
+texture = ExtResource("2_stmqn")
+
+[node name="Line2D" type="Line2D" parent="Graphics"]
+position = Vector2(-3.33333, 5)
+scale = Vector2(0.666667, 1)
+points = PackedVector2Array(0, 0, 79, 13, 79, 23, 0, 39, 0, 0)
+default_color = Color(0.2, 0.301961, 0.298039, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+
+[node name="ladderMarker" type="Marker2D" parent="Graphics"]
+position = Vector2(49, 23)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
+position_smoothing_enabled = true
+position_smoothing_speed = 3.0

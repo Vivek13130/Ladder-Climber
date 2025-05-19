@@ -1,0 +1,71 @@
+[gd_scene load_steps=4 format=3 uid="uid://b54i3rjd0hth6"]
+
+[ext_resource type="StyleBox" uid="uid://bp42hj3ic64w8" path="res://assets/ui_box.tres" id="1_bo1xa"]
+[ext_resource type="Script" path="res://scenes/game_over_ui.gd" id="1_o13yo"]
+[ext_resource type="LabelSettings" uid="uid://bgjh2h758dy8a" path="res://scenes/text_setting.tres" id="2_fmqlh"]
+
+[node name="game_over_ui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_o13yo")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_bo1xa")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="your_score" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "You Reached 15m"
+label_settings = ExtResource("2_fmqlh")
+horizontal_alignment = 1
+
+[node name="high_score" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Your best is 21m"
+label_settings = ExtResource("2_fmqlh")
+horizontal_alignment = 1
+
+[node name="platforms_crossed" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "You crossed 7 platforms to reach this height"
+label_settings = ExtResource("2_fmqlh")
+
+[node name="ladder_step_spawned" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "You Spawned 1200 ladder steps ! "
+label_settings = ExtResource("2_fmqlh")
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Back To Menu"
+
+[connection signal="pressed" from="PanelContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]
