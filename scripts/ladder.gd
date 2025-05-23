@@ -37,6 +37,7 @@ func start_growing():
 
 # Function to spawn a new ladder step
 func spawn_step():
+	Manager.ladder_steps_used += 1
 	var step : Sprite2D = ladder_step_scene.instantiate()
 	var y_offset = -step_height * ladder_step_size
 	step.position = Vector2(0, y_offset)
@@ -55,8 +56,8 @@ func drop_ladder(direction: String):
 	
 	var full_ladder : RigidBody2D = RigidBody2D.new()
 	full_ladder.add_to_group("ladder")
-	full_ladder.mass = 0.1
 	add_child(full_ladder)
+	full_ladder.mass = 0.1
 	full_ladder.global_position = ladder_steps[0].global_position  # Position the full ladder at the base of the first step
 	
 	Manager.rigid_ladders.append(full_ladder)
@@ -106,14 +107,14 @@ func check_ladder_validity(full_ladder : RigidBody2D):
 	var required_steps = int(round(min(dist, dist1) / step_height))
 	
 	#print("required steps : ", required_steps, "  steps found : ", ladder_step_size)
-	
-	if ladder_step_size - required_steps > 10:
+	print("current diff : ", ladder_step_size - required_steps)
+	if ladder_step_size - required_steps > 13:
 		await get_tree().create_timer(3.0).timeout
 		break_ladder(full_ladder)
 
-	elif ladder_step_size - required_steps  < -5:
-		await get_tree().create_timer(3.0).timeout
-		break_ladder(full_ladder)
+	#elif ladder_step_size - required_steps  < -5:
+		#await get_tree().create_timer(3.0).timeout
+		#break_ladder(full_ladder)
 
 
 

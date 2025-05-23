@@ -1,11 +1,12 @@
 extends Node
 
 
+
 # UI update variables 
-var max_height : int = 0 
+var max_height : float = 0 
 var platform_crossed : int = 0 
 var chances_left : int = 3
-var high_score : int = 0
+var high_score : float = 0.0
 
 
 # platform states 
@@ -21,9 +22,26 @@ var rigid_ladders := []
 var ladder_is_growing : bool = false
 var ladder_is_falling : bool = false  
 var ladder_step_length : int = 1 
+var ladder_steps_used : int = 0
 
 var player_face_direction : int = 1 # 1 for right , -1 for left
 var game_over : bool = false
+
+func reset_manager():
+	max_height = 0 
+	platform_crossed  = 0 
+	chances_left = 3
+	current_platform_index = 0
+	platforms = []  
+	base_location 
+	player_position 
+	rigid_ladders = []
+	ladder_is_growing  = false
+	ladder_is_falling  = false  
+	ladder_step_length  = 1 
+	player_face_direction  = 1 # 1 for right , -1 for left
+	game_over  = false
+	ladder_steps_used = 0
 
 
 

@@ -9,8 +9,10 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	label.text = "Highscore : " + str(Manager.high_score) + " m"
+
 
 
 func _on_button_pressed() -> void:
+	Manager.reset_manager()
 	get_tree().change_scene_to_file("res://scenes/main.tscn")

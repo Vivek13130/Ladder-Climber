@@ -1,14 +1,25 @@
-[gd_scene load_steps=7 format=3 uid="uid://dl0gbnnyuuusy"]
+[gd_scene load_steps=9 format=3 uid="uid://dl0gbnnyuuusy"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_87lmr"]
+[ext_resource type="Texture2D" uid="uid://btfkoypctnkex" path="res://assets/stars-night-textured-background (1).jpg" id="2_j54pf"]
 [ext_resource type="PackedScene" uid="uid://bknvofivxt4oe" path="res://scenes/player.tscn" id="3_v7u1g"]
 [ext_resource type="PackedScene" uid="uid://b4oh8qlhbmvkn" path="res://scenes/platform.tscn" id="4_yi8lw"]
 [ext_resource type="PackedScene" uid="uid://d1mtu4rwjfyyw" path="res://scenes/in_game_ui.tscn" id="5_2cxml"]
 [ext_resource type="PackedScene" uid="uid://bxmguyvo1mhm7" path="res://scenes/platform_spawner.tscn" id="5_tf1iy"]
 [ext_resource type="PackedScene" uid="uid://blf33r43q8td0" path="res://scenes/deathZone.tscn" id="6_hvc7x"]
+[ext_resource type="PackedScene" uid="uid://b54i3rjd0hth6" path="res://scenes/game_over_ui.tscn" id="7_u2h6q"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_87lmr")
+
+[node name="bg" type="Sprite2D" parent="."]
+modulate = Color(0.241156, 0.241156, 0.241156, 1)
+show_behind_parent = true
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(390, -599)
+scale = Vector2(2, 2)
+texture = ExtResource("2_j54pf")
 
 [node name="player" parent="." instance=ExtResource("3_v7u1g")]
 position = Vector2(251, 145)
@@ -30,3 +41,8 @@ position = Vector2(183, 410)
 
 [node name="deathZone" parent="." instance=ExtResource("6_hvc7x")]
 position = Vector2(-246, 877)
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="game_over_ui" parent="CanvasLayer2" instance=ExtResource("7_u2h6q")]

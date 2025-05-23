@@ -12,6 +12,7 @@ func _on_ladder_step_spawner_body_entered(body: Node2D) -> void:
 		Manager.platform_crossed += 1
 		Manager.current_platform_index += 1
 		Manager.platforms[Manager.current_platform_index].collision_layer = 1
+		Manager.platforms[Manager.current_platform_index].get_node("Ladder_step_spawner").collision_layer = 1
 		print("reached new platform : " , Manager.current_platform_index)
-		body.get_ladder_step()
+		body.get_ladder_step(true)
 		served_ladder_step = true

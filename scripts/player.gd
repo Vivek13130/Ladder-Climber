@@ -17,20 +17,39 @@ var state = State.IDLE
 
 var player_at_platform_ind : int = -1
 var printed_warning : bool = false
+var can_jump = true
+
+func _ready() -> void:
+	$CPUParticles2D.emitting = true
 
 func _physics_process(delta):
-	Manager.max_height = max(Manager.max_height , global_position.distance_to(Manager.base_location) / 100)
-	print(Manager.high_score)
+	for body in $ground_checker.get_overlapping_bodies():
+		if body is RigidBody2D or body is StaticBody2D:
+			can_jump = true
+			break
+	
+	if(global_position.y > Manager.base_location.y):
+		get_parent().game_over()
+	
+	if(Manager.game_over):
+		return 
+	
+	if(global_position.y < Manager.base_location.y):
+		Manager.max_height = max(Manager.max_height , global_position.distance_to(Manager.base_location) / 100)
+		Manager.max_height = floor(Manager.max_height * 10) / 10
 	Manager.player_position = global_position
 	
 	if(Input.is_action_just_pressed("ladder_step") and not has_ladder):
-		get_ladder_step()
+		get_ladder_step(false)
 		Manager.chances_left -= 1
 	
 	handle_movement(delta)
 
-	if not is_on_floor():
-		velocity.y += GRAVITY * delta
+	
+	velocity.y += GRAVITY * delta
+	
+	if(velocity.y > 800):
+		velocity.y = 800
 	
 	move_and_slide()
 
@@ -47,8 +66,9 @@ func handle_movement(delta):
 	
 	velocity.x = input_vector.x * SPEED
 
-	if Input.is_action_just_pressed("jump") :
+	if Input.is_action_just_pressed("jump") and can_jump:
 		velocity.y = JUMP_FORCE
+		can_jump = false
 
 
 func _input(event):
@@ -93,21 +113,17 @@ func _input(event):
 			#else: 
 				#print("leftover ladders not found")
 	
-	if event.is_action_pressed("climb_ladder"):
-		state = State.CLIMBING
-		start_climbing()
 
 
-func start_climbing():
-	pass
 
 func get_next_platform_direction() -> String:
 	return "right"
 
 
 # Called when a platform emits signal saying "player reached me"
-func get_ladder_step():
-	Manager.free_all_ladders()
+func get_ladder_step(free_all_ladders : bool):
+	if(free_all_ladders):
+		Manager.free_all_ladders()
 	if(has_ladder):
 		return
 	has_ladder = true
